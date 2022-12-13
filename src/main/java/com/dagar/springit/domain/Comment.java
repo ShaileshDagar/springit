@@ -7,12 +7,10 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @Entity
 @NoArgsConstructor
 @Data
-public class Comment {
+public class Comment extends Auditable{
 
     @Id
     @GeneratedValue
