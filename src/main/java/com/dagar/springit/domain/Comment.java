@@ -1,22 +1,25 @@
 package com.dagar.springit.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
-@Data
+@RequiredArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 public class Comment extends Auditable{
 
     @Id
     @GeneratedValue
     private Long id;
+    @NonNull
     private String body;
 
     @ManyToOne
+    @NonNull
+    @JoinColumn(name = "linkID")
     private Link link;
 }
