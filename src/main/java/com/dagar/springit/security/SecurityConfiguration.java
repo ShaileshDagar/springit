@@ -23,20 +23,27 @@ public class SecurityConfiguration {
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception{
-        return http
-                .authorizeRequests(auth -> {
+
+        http.authorizeRequests(auth -> {
                     auth.requestMatchers(EndpointRequest.to("info")).permitAll();
                     auth.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN");
                     auth.requestMatchers("/").permitAll();
-                    auth.requestMatchers("/link/submit").hasRole("ADMIN");
+                    auth.requestMatchers("/link/submit").hasRole("USER");
                     auth.requestMatchers("/h2-console/**").permitAll();
-                })
-                .formLogin()
-                .and()
-                .csrf().disable()
-                .headers().frameOptions().disable()
-                .and()
-                .build();
+                });
+
+        http.formLogin()
+                .loginPage("/login").permitAll()
+                .usernameParameter("email");
+
+        http.logout().and()
+                .rememberMe();
+
+//      http.csrf().disable()
+//               .headers().frameOptions().disable()
+//               .and()
+
+        return http.build();
     }
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http)

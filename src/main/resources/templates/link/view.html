@@ -28,7 +28,7 @@
             </p>
             <p class="tagline ">submitted
                 <time th:title="${link.getCreationDate()}" th:datetime="${link.getCreationDate()}" class="live-timestamp">2 hours ago</time> by
-                <a href="/" class="author">ShaileshDagar</a>
+                <a href="/" class="author" th:text="${link.createdBy}">ShaileshDagar</a>
                 <span class="userattrs"></span>
             </p>
             <p>
