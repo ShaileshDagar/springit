@@ -3,19 +3,25 @@ package com.dagar.springit.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
-@Data
-public class Vote {
+@RequiredArgsConstructor
+@Getter
+@Setter
+public class Vote extends Auditable {
 
     @Id
     @GeneratedValue
     private Long id;
-    private int vote;
-    //user
-    //link
+
+    @NonNull
+    private short direction;
+
+    @NonNull
+    @ManyToOne
+    private Link link;
 
 }
