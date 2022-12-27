@@ -24,7 +24,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 public class Link extends Auditable{
 
     @Id
