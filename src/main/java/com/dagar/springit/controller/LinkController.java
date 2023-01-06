@@ -2,8 +2,8 @@ package com.dagar.springit.controller;
 
 import com.dagar.springit.domain.Comment;
 import com.dagar.springit.domain.Link;
-import com.dagar.springit.repository.CommentRepository;
-import com.dagar.springit.repository.LinkRepository;
+import com.dagar.springit.service.CommentService;
+import com.dagar.springit.service.LinkService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,23 +20,23 @@ import java.util.Optional;
 public class LinkController {
 
     private static final Logger logger = LoggerFactory.getLogger(LinkController.class);
-    private final LinkRepository linkRepository;
-    private final CommentRepository commentRepository;
+    private final LinkService linkService;
+    private final CommentService commentService;
 
-    public LinkController(LinkRepository linkRepository, CommentRepository commentRepository) {
-        this.linkRepository = linkRepository;
-        this.commentRepository = commentRepository;
+    public LinkController(LinkService linkService, CommentService commentService) {
+        this.linkService = linkService;
+        this.commentService = commentService;
     }
 
     @GetMapping("/")
     public String list(Model model){
-        model.addAttribute("links", linkRepository.findAll());
+        model.addAttribute("links", linkService.findAll());
         return "link/list";
     }
 
     @GetMapping("/link/{id}")
     public String read(@PathVariable Long id, Model model) {
-        Optional<Link> optionalLink = linkRepository.findById(id);
+        Optional<Link> optionalLink = linkService.findById(id);
         if(optionalLink.isPresent()){
             Link link = optionalLink.get();
             Comment comment = new Comment();
@@ -63,7 +63,7 @@ public class LinkController {
             model.addAttribute("link", link);
         }else{
             logger.info(String.valueOf(link.getId()));
-            link = linkRepository.save(link);
+            link = linkService.save(link);
             logger.info(String.valueOf(link.getId()));
             logger.info("New link was saved successfully.");
             redirectAttributes
@@ -80,7 +80,7 @@ public class LinkController {
             logger.info("Something went wrong.");
         } else {
             logger.info("New Comment Saved!");
-            commentRepository.save(comment);
+            commentService.save(comment);
             redirectAttributes
                     .addFlashAttribute("commentsuccess", true);
         }
