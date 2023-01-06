@@ -4,77 +4,101 @@
 </head>
 <body>
 
-<nav th:replace="~{layouts/main_layout :: nav}"></nav>
-<div th:replace="~{layouts/main_layout :: jumbotron}"></div>
+    <nav th:replace="~{layouts/main_layout :: nav}"></nav>
+    <div th:replace="~{layouts/main_layout :: jumbotron}"></div>
 
-<div class="container">
+    <div class="container">
 
-    <div class="alert alert-success" role="alert" th:if="${success}">
-        Your new link was created!
-    </div>
-    <div class="alert alert-success" role="alert" th:if="${commentsuccess}">
-        Your comment was added successfully!
-    </div>
-    <!-- link -->
-    <div class="row link">
-        <div class="col-1">
-            <div><a href="#" class="upvote"><i class="fas fa-arrow-up"></i></a></div>
-            <div><span class="votecount">3</span></div>
-            <div><a href="#" class="downvote"><i class="fas fa-arrow-down"></i></a></div>
+        <div class="alert alert-success" role="alert" th:if="${success}">
+            Your new link was created!
         </div>
-        <div class="col-11">
-            <p class="title">
-                <a class="title " th:href="${link.url}" th:text="${link.title}" target="_blank">
-                    What's new in Spring Boot 2?
-                </a>
-                <span class="domain">(<a th:href="${link.url}" th:text="${link.getDomainName()}">shaileshdagar.medium.com</a>)</span>
-            </p>
-            <p class="tagline ">submitted
-                <time th:title="${link.getCreationDate()}" th:datetime="${link.getCreationDate()}" class="live-timestamp">2 hours ago</time> by
-                <a href="#" class="author" th:text="${link.createdBy}">ShaileshDagar</a>
-                <span class="userattrs"></span>
-            </p>
-            <p>
-                <a href="#" class="comments" th:text="|${link.getComments.size()} comments|"><i class="fas fa-comments"></i>0 comments</a>
-                <a href="#" class="share"><i class="fas fa-share-square"></i> share</a>
-            </p>
+        <div class="alert alert-success" role="alert" th:if="${commentsuccess}">
+            Your comment was added successfully!
         </div>
-    </div>
-
-    <!-- link comments -->
-    <div id="comments" class="comments">
-        <div class="row header">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-11 title" th:text="|all ${link.getComments.size()} comments|">
-                all 21 comments
+        <!-- link -->
+        <div class="row link">
+            <div class="col-1">
+                <div><a href="#" class="upvote" th:data-id="${link.id}"><i class="fas fa-arrow-up"></i></a></div>
+                <div><span th:id="|votecount-${link.id}|" class="votecount" th:text="${link.getVoteCount()}">0</span></div>
+                <div><a href="#" class="downvote" th:data-id="${link.id}" th:disabled="true"><i class="fas fa-arrow-down"></i></a></div>
             </div>
-        </div>
-        <div class="row addcomment" sec:authorize="hasRole('ROLE_USER')">
-            <div class="col-1">&nbsp;</div>
             <div class="col-11">
-                <form id="frmAddLink" method="POST" th:action="@{/link/comments}" th:object="${comment}">
-                    <input type="hidden" th:field="*{link}"/>
-                    <div class="form-group">
-                        <textarea class="form-control" id="comment" rows="3" th:field="*{body}"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Comment</button>
-                </form>
+                <p class="title">
+                    <a class="title " th:href="${link.url}" th:text="${link.title}" target="_blank">
+                        What's new in Spring Boot 2?
+                    </a>
+                    <span class="domain">(<a th:href="${link.url}" th:text="${link.getDomainName()}">shaileshdagar.medium.com</a>)</span>
+                </p>
+                <p class="tagline ">submitted
+                    <time th:title="${link.getCreationDate()}" th:datetime="${link.getCreationDate()}" class="live-timestamp">2 hours ago</time> by
+                    <a href="#" class="author" th:text="${link.createdBy}">ShaileshDagar</a>
+                    <span class="userattrs"></span>
+                </p>
+                <p>
+                    <a href="#" class="comments" th:text="|${link.getComments.size()} comments|"><i class="fas fa-comments"></i>0 comments</a>
+                    <a href="#" class="share"><i class="fas fa-share-square"></i> share</a>
+                </p>
             </div>
         </div>
-        <!-- single comment -->
-        <div class="row comment" th:each="comment : ${link.getComments()}">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-11">
-                <span><a href="#" th:text="${comment.getCreatedBy()}"><i class="far fa-user"></i>ShaileshDagar</a></span>
-                <span th:text="${comment.getPrettyTime()}"><i class="far fa-clock"></i> 4 hours ago</span>
-                <p class="body" th:text="${comment.getBody()}">It’s one thing I never care about, new releases of maven. Yet I do for most other things.. I really should take a look at any features released in the last while! Pull my dependencies, run my tests and upload to nexus. I don’t care for much else, I wonder what if any I’m missing.</p>
-                <a href="#" class="permalink"><i class="fas fa-link"></i> permalink</a>
-                <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+
+        <!-- link comments -->
+        <div id="comments" class="comments">
+            <div class="row header">
+                <div class="col-1">&nbsp;</div>
+                <div class="col-11 title" th:text="|all ${link.getComments.size()} comments|">
+                    all 21 comments
+                </div>
+            </div>
+            <div class="row addcomment" sec:authorize="hasRole('ROLE_USER')">
+                <div class="col-1">&nbsp;</div>
+                <div class="col-11">
+                    <form id="frmAddLink" method="POST" th:action="@{/link/comments}" th:object="${comment}">
+                        <input type="hidden" th:field="*{link}"/>
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment" rows="3" th:field="*{body}"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Comment</button>
+                    </form>
+                </div>
+            </div>
+            <!-- single comment -->
+            <div class="row comment" th:each="comment : ${link.getComments()}">
+                <div class="col-1">&nbsp;</div>
+                <div class="col-11">
+                    <span><a href="#" th:text="${comment.getCreatedBy()}"><i class="far fa-user"></i>ShaileshDagar</a></span>
+                    <span th:text="${comment.getPrettyTime()}"><i class="far fa-clock"></i> 4 hours ago</span>
+                    <p class="body" th:text="${comment.getBody()}">It’s one thing I never care about, new releases of maven. Yet I do for most other things.. I really should take a look at any features released in the last while! Pull my dependencies, run my tests and upload to nexus. I don’t care for much else, I wonder what if any I’m missing.</p>
+                    <a href="#" class="permalink"><i class="fas fa-link"></i> permalink</a>
+                    <a href="#" class="like"><i class="far fa-thumbs-up"></i> Like</a>
+                </div>
             </div>
         </div>
+
     </div>
 
-</div>
+    <script sec:authorize="!isFullyAuthenticated()">
+        var allvotes = document.querySelectorAll(".upvote, .downvote");
+        for(let i=0; i<allvotes.length; i++) {
+            allvotes[i].href="http://localhost:8080/login";
+        }
+    </script>
+    <script sec:authorize="isFullyAuthenticated()">
+        const allvotes = document.querySelectorAll(".upvote, .downvote");
+        for(let i=0; i<allvotes.length; i++) {
+            let className = allvotes[i].className;
+            allvotes[i].addEventListener('click', function (event) {
+                const direction = className === 'upvote' ? 1 : -1;
+                const linkID = this.getAttribute("data-id");
+                const voteSum = document.getElementById('votecount-' + linkID);
+                const voteSumValue = voteSum.innerHTML;
+                fetch(`http://localhost:8080/vote/link/${linkID}/direction/${direction}/votecount/${voteSumValue}`)
+                    .then(response => response.json())
+                    .then(data => voteSum.innerHTML = data)
+                    .catch(err => console.error(err));
+                event.preventDefault();
+            });
+        }
+    </script>
 
 </body>
 </html>
