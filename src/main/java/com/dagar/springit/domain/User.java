@@ -1,13 +1,17 @@
 package com.dagar.springit.domain;
 
+import com.dagar.springit.domain.validator.PasswordsMatch;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -18,6 +22,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 @ToString
 @Table(name = "users")
+@PasswordsMatch
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -43,6 +48,33 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @NonNull
+    @NotEmpty(message = "You must enter First Name.")
+    private String firstName;
+
+    @NonNull
+    @NotEmpty(message = "You must enter Last Name.")
+    private String lastName;
+
+    @Transient
+    @Setter(AccessLevel.NONE)
+    private String fullName;
+
+    @NonNull
+    @NotEmpty(message = "Please enter alias.")
+    @Column(nullable = false, unique = true)
+    private String alias;
+
+    @Transient
+    @NotEmpty(message = "Please, re-enter the Password")
+    private String confirmPassword;
+
+    private String activationCode;
+
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 
     public void addRole(Role userRole) {
         roles.add(userRole);

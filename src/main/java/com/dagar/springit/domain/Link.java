@@ -1,10 +1,7 @@
 package com.dagar.springit.domain;
 
 import com.dagar.springit.service.BeanUtil;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -45,6 +42,9 @@ public class Link extends Auditable{
     private List<Vote> votes = new ArrayList<>();
 
     private int voteCount = 0;
+
+    @ManyToOne
+    private User user;
 
     public void addComment(Comment comment) {
         comments.add(comment);

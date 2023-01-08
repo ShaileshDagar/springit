@@ -2,12 +2,14 @@ package com.dagar.springit.controller;
 
 import com.dagar.springit.domain.Comment;
 import com.dagar.springit.domain.Link;
+import com.dagar.springit.domain.User;
 import com.dagar.springit.service.CommentService;
 import com.dagar.springit.service.LinkService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,6 +64,8 @@ public class LinkController {
             logger.info("Validation errors were found while submitting a new link.");
             model.addAttribute("link", link);
         }else{
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            link.setUser(user);
             logger.info(String.valueOf(link.getId()));
             link = linkService.save(link);
             logger.info(String.valueOf(link.getId()));
