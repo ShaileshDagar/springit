@@ -1,4 +1,4 @@
-# Springit [A Simple Reddit Clone]
+# [Springit](http://springit-env.eba-wpccbtas.us-east-1.elasticbeanstalk.com/) [A Simple Reddit Clone]
 
 A project to learn Spring Boot by creating a simple clone of Reddit.
 
