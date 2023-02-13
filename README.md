@@ -1,52 +1,73 @@
-# Springit [Reddit Clone]
+# Springit [A Reddit Clone]
 
 A project to learn Spring Boot by creating a simple clone of Reddit.
 
-## Getting Started
+## Description
+This is a simplified Reddit Clone where users can explore links that other users have posted, and can also post their own links.
+Users can also interact with a link by commenting or up-voting/down-voting a link. 
+To post a link or to interact with a link, a user must be registered on the application.
+Presently, a user can up-vote or down-vote on a link as many times as they like.
 
-TODO: How to get Started?
+## Built With
+* [Spring Framework 6](https://spring.io/projects/spring-framework)
+* [Spring Boot 3](https://spring.io/projects/spring-boot)
 
-### Dependencies
+## Tools
+* [Hibernate](https://hibernate.org/orm/documentation/6.1/)
+* [Project Lombok](https://projectlombok.org/)
+* [PrettyTime](https://www.ocpsoft.org/prettytime/)
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
+## Requirements
+For building and running the application you need:
 
-### Installing
+- [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Maven 3](https://maven.apache.org)
+- [MySQL](https://www.mysql.com/)
 
-* How/where to download your program
-* Any modifications needed to be made to files/folders
+## Running the application locally
 
-### Executing program
+There are several ways to run a Spring Boot application on your local machine. 
+One way is to execute the `main` method in the `com.springboot.springit.SpringitApplication` class from your IDE.
 
-* How to run the program
-* Step-by-step bullets
+## API Endpoints
+### Home Page
 ```
-code blocks for commands
+GET /
 ```
-
-## Help
-
-Any advice for common problems or issues.
+### Login
 ```
-command to run if program contains helper info
+GET /login
 ```
-
+### Profile
+```
+GET /profile
+```
+### Register
+```
+GET /register
+```
+### View Link
+```
+GET /link/{id}
+```
+### Link Submission Page
+```
+GET /link/submit
+```
+### Post a comment
+```
+POST /link/comments
+```
+### Post a Vote
+```
+POST /vote/link/{linkID}/direction/{direction}/votecount/{voteCount}
+```
 ## Authors
 
-* Dan Vega - [The Real Dan Vega](http://www.therealdanvega.com)
 * Shailesh Dagar - [Github](https://github.com/ShaileshDagar)
-
-## Version History
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
 Inspiration, code snippets, etc.
+* [The Real Dan Vega](http://www.therealdanvega.com)
 * [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
