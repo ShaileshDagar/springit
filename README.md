@@ -1,4 +1,4 @@
-# Springit [A Reddit Clone]
+# [Springit](http://springit-env.eba-wpccbtas.us-east-1.elasticbeanstalk.com/) [A Simple Reddit Clone]
 
 A project to learn Spring Boot by creating a simple clone of Reddit.
 
@@ -16,6 +16,7 @@ Presently, a user can up-vote or down-vote on a link as many times as they like.
 * [Hibernate](https://hibernate.org/orm/documentation/6.1/)
 * [Project Lombok](https://projectlombok.org/)
 * [PrettyTime](https://www.ocpsoft.org/prettytime/)
+* [IntelliJ Idea](https://www.jetbrains.com/idea/)
 
 ## Requirements
 For building and running the application you need:
